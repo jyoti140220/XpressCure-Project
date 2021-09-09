@@ -8,7 +8,8 @@ const signup = async (req, res) => {
         lastName:joi.string().min(3).max(10).required(),
         email:joi.string().email().lowercase().required(),
         password:joi.string().required(),
-        phoneNumber:joi.number().integer().min(10**9).max(10**10 - 1)
+        // phoneNumber:joi.number().integer().min(10**9).max(10**10 - 1)
+        phoneNumber:joi.string().length(10).required()
     })
     const result=authschema.validate(req.body)
     if(result.error){
@@ -16,12 +17,11 @@ const signup = async (req, res) => {
     }else{
         console.log("data validate")
     }
-    
     try {  
         const userExits=await db.findOne({email:req.body.email})
         if (userExits){
             return res.status(208).json({
-                message:"Email Is Already Exists",
+                message:"Email Should Be Unique This Is Already Exists",
                 status:208
             })
         }else{
