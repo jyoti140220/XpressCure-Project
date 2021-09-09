@@ -1,5 +1,6 @@
 const db=require('../modal/users.js')
 
+
 const updateUserDetials=async(req,res)=>{
     try{
         const result=await db.updateOne({email:req.body.email},{$set:req.body});
